@@ -1,16 +1,21 @@
 
-module.exports = function mymodule(args) {
+module.exports = mymodule;
+
+function mymodule(directory, filter, callback) {
   var fs = require('fs');
   var path = process.argv[2];
   var ext = "." + process.argv[3];
-
+  console.log('hello');
+console.log(directory);
+console.log(filter);
+console.log(callback);
   fs.readdir(path, (err, list) => {
     if (err) {
-      return console.log(err);
+      return err;
     } else {
       list.forEach(el => {
         if (el.includes(ext)) {
-          console.log(el);
+          return el;
         }
       });
     }
@@ -23,4 +28,4 @@ module.exports = function mymodule(args) {
 //       console.log(data.split('\n').length - 1);
 //     }
 //   });
-};
+}
