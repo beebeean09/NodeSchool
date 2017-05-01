@@ -1,31 +1,21 @@
+//Needed for modular problem
+var fs = require('fs');
 
-module.exports = mymodule;
-
-function mymodule(directory, filter, callback) {
-  var fs = require('fs');
+module.exports = function (directory, filter, callback) {
   var path = process.argv[2];
-  var ext = "." + process.argv[3];
-  console.log('hello');
-console.log(directory);
-console.log(filter);
-console.log(callback);
-  fs.readdir(path, (err, list) => {
+  var ext = "." + filter;
+
+  fs.readdir(directory, (err, list) => {
     if (err) {
-      return err;
+      callback(err, null);
     } else {
+      let result = [];
       list.forEach(el => {
         if (el.includes(ext)) {
-          return el;
+          result.push(el);
         }
       });
+      callback(null, result);
     }
   });
-
-//   fs.readFile(path, 'utf8', (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log(data.split('\n').length - 1);
-//     }
-//   });
-}
+};
